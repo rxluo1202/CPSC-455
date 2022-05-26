@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Recipe</title>
+		<link rel="stylesheet" type="text/css" href="recipe.css">
+		<script type="text/javascript" src="recipes.json"></script>
+		<script>
+
+            let title;
+            let ingredients = [];
+            let instructions = [];
+
+			function handleNavClick(obj) {
+				let elements = document.getElementsByClassName("active");
+				obj.classList.add("active");
+				for (let i = 0; i < elements.length; i++) {
+					let element = elements[i];
+					if (element.id != obj.id) {
+						element.classList.remove("active");
+						document.getElementById(element.id.slice(4)).classList.add("hidden");
+					}
+				}
+				document.getElementById(obj.id.slice(4)).classList.remove("hidden");
+			}
+
+			function drawCards() {
+
+				let card_content = document.getElementById("allcards");
+
+				for (let i = 0; i < recipes.length; i++) {
+
+					let a = recipes[i].ingredients.split(";");
+					let b = recipes[i].instructions.split(";");
+
+					let recipe_card = document.createElement("div");
+					recipe_card.classList.add("recipe-card");
+
+					let title_elem = document.createElement("h4");
+					title_elem.classList.add("column-title");
+					let title = document.createTextNode(recipes[i].title);
+					title_elem.appendChild(title);
+					recipe_card.appendChild(title_elem);
+
+					let description = document.createElement("div");
+					description.classList.add("recipe-content");
+
+					let ingre_elem = document.createElement("h3");
+					let ingredients = document.createTextNode("Ingredients");
+					ingre_elem.appendChild(ingredients);
+					description.appendChild(ingre_elem);
+					
+					let ingres = document.createElement("ul");
+					ingres.classList.add("ingredients");
+					for (let j = 0; j < a.length; j++) {
+						let item = document.createElement("li");
+						let ingre = document.createTextNode(a[j]);
+						item.appendChild(ingre);
+						ingres.appendChild(item);
+					}
+					description.appendChild(ingres);
+
+					let instruct_elem = document.createElement("h3");
+					let instructions = document.createTextNode("Instructions");
+					instruct_elem.appendChild(instructions);
+					description.appendChild(instruct_elem);
+
+					let instructs = document.createElement("ul");
+					instructs.classList.add("instructions");
+					for (let j = 0; j < b.length; j++) {
+						let item = document.createElement("li");
+						let instruct = document.createTextNode(b[j]);
+						item.appendChild(instruct);
+						instructs.appendChild(item);
+					}
+					description.appendChild(instructs);
+					recipe_card.appendChild(description);
+
+					card_content.appendChild(recipe_card);
+				}
+
+			}
+
+            function add() {
+
+                this.title = document.getElementsByClassName("inputfield")[0].getElementsByClassName("input")[0].value;
+                if (this.title === "") {
+                    this.title = "undefined";
+                }
+
+                let str1 = document.getElementsByClassName("inputfield")[1].getElementsByClassName("textarea")[0].value;
+                this.ingredients = str1.split(";");
+                // console.log(this.ingredients)
+                let str2 = document.getElementsByClassName("inputfield")[2].getElementsByClassName("textarea")[0].value
+                this.instructions = str2.split(";");
+
+                // create a new card
+
+                let card_content = document.getElementById("allcards");
+                
+                let recipe_card = document.createElement("div");
+                recipe_card.classList.add("recipe-card");
+
+                let title_elem = document.createElement("h4");
+		 		title_elem.classList.add("column-title");
+			    let title = document.createTextNode(this.title);
+			 	title_elem.appendChild(title);
+			    recipe_card.appendChild(title_elem);
+
+				let description = document.createElement("div");
+				description.classList.add("recipe-content");
+
+				let ingre_elem = document.createElement("h3");
+				let ingredients = document.createTextNode("Ingredients");
+				ingre_elem.appendChild(ingredients);
+				description.appendChild(ingre_elem);
+                
+                let ingres = document.createElement("ul");
+				ingres.classList.add("ingredients");
+                for (let i = 0; i < this.ingredients.length; i++) {
+                    let item = document.createElement("li");
+					let ingre = document.createTextNode(this.ingredients[i]);
+					item.appendChild(ingre);
+					ingres.appendChild(item);
+                }
+                description.appendChild(ingres);
+
+				let instruct_elem = document.createElement("h3");
+				let instructions = document.createTextNode("Instructions");
+				instruct_elem.appendChild(instructions);
+				description.appendChild(instruct_elem);
+
+				let instructs = document.createElement("ul");
+				instructs.classList.add("instructions");
+                for (let i = 0; i < this.instructions.length; i++) {
+                    let item = document.createElement("li");
+					let instruct = document.createTextNode(this.instructions[i]);
+					item.appendChild(instruct);
+					instructs.appendChild(item);
+                }
+                description.appendChild(instructs);
+				recipe_card.appendChild(description);
+
+				// let btn = document.createElement("input");
+				// btn.type = "button";
+				// btn.value = "Delete";
+				// btn.classList.add("btn");
+				// btn.onclick = function() {
+				// 	deleteCard();
+				// };
+				// recipe_card.appendChild(btn);
+
+                card_content.appendChild(recipe_card);
+
+				document.getElementsByClassName("inputfield")[0].getElementsByClassName("input")[0].value = "";
+				document.getElementsByClassName("inputfield")[1].getElementsByClassName("textarea")[0].value = "";
+				document.getElementsByClassName("inputfield")[2].getElementsByClassName("textarea")[0].value = "";
+            }
+
+			function deleteAll() {
+				let allcards = document.getElementsByClassName("recipe-card");
+				for (let i = 0; i < allcards.length; i++) {
+					allcards[i].classList.add("hidden");
+				}
+			}
+            
+		</script>
+	</head>
+	
+	<body id="body" onload="drawCards()">
+		<!--NAV BAR -->
+        <div id="navbar">
+            <ul>
+                <li><a id="nav_home" class="active" onClick="handleNavClick(this)">Home</a></li>
+                <li><a id="nav_about" onClick="handleNavClick(this)">About</a></li>
+            </ul>
+        </div>
+
+		<!--CONTENT -->
+		<div id="home" class="content">
+			<div class="newrecipe">
+                <div class="title">
+                    New Recipe
+                </div>
+                <div id="form">
+                    <form action="">
+                        <div class="inputfield">
+                            <label>Title</label>
+                            <input type="text" class="input">
+                        </div>  
+                        <div class="inputfield">
+                            <label>Ingredients</label>
+                            <textarea class="textarea"></textarea>
+                        </div> 
+                        <div class="inputfield">
+                            <label>Instructions</label>
+                            <textarea class="textarea"></textarea>
+                        </div> 
+                        <div class="inputfield" id="buttons">
+                            <input type="button" value="Add" class="btn" onclick="add()">
+                            <input type="reset" value="Clear" class="btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+			<div id="cards">
+				<input type="button" value="Delete All" class="btn" onclick="deleteAll()">
+				<div id="allcards">
+				</div>
+			</div>
+		</div>
+        
+		<!--About-->
+		<div id="about" class="content hidden">
+			<div id="intro">
+				<p>I am Ruixue Luo, a MEng of ECE. This fall will be my second year at UBC. Although my major is Electrical and Computer Engineering and I studied EE when doing my bachelor's, I will probably become a software engineer next year. (Just wish me luck!)</p>
+				<p>I am rather dull actually...</p>
+			</div>
+			<div id="photo">
+				<img src="selfie.jpg" alt="">
+			</div>
+		</div>
+
+		<div class="footer">
+			<div>Ruixue Luo</div>
+			<div>CPSC 455</div>
+		</div>
+	</body>
+</html>

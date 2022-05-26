@@ -1,0 +1,17 @@
+recipes = [
+    {
+        "title": "Spaghetti",
+        "ingredients": "Spaghetti; Tomato Sauce; Cheese",
+        "instructions": "Add Spaghetti to water; Boil for 10 minutes; Drain Spaghetti; Add sauce; Add cheese; Enjoy!"
+    },
+    {
+        "title": "Scrambled Eggs",
+        "ingredients": "Eggs; Butter",
+        "instructions": "Crack eggs; Beat in bowl; Heat up pan and add butter; Add eggs; Cook; Enjoy!"
+    },
+    {
+        "title": "Hot Water",
+        "ingredients": "Water",
+        "instructions": "Add water to kettle; Heat; Enjoy!"
+    }
+];
