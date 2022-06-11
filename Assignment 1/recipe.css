@@ -194,10 +194,16 @@ img {
     .newrecipe, #cards {
         width: 500px;
     }
+    #buttons {
+        padding-left: 300px;
+    }
 }
 
 @media (max-width: 600px) {
     .newrecipe, #cards {
         width: 350px;
+    }
+    #buttons {
+        padding-left: 150px;
     }
 }
